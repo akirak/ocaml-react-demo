@@ -1,0 +1,7 @@
+(library
+ (name base_ui)
+ (modules base_ui)
+ (modes melange)
+ (preprocess
+  (pps melange.ppx reason-react-ppx))
+ (libraries reason-react))
