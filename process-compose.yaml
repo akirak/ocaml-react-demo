@@ -14,7 +14,7 @@ processes:
       install:
         condition: process_completed_successfully
   vite:
-    command: bash -lc 'while [ ! -f src/App.js ]; do sleep 0.2; done; pnpm run dev'
+    command: bash -lc 'while [ ! -f _build/default/src/src/App.js ]; do sleep 0.2; done; pnpm run dev'
     depends_on:
       install:
         condition: process_completed_successfully
