@@ -1,0 +1,7 @@
+(dirs :standard \ node_modules)
+
+(melange.emit
+ (target src)
+ (promote (until-clean))
+ (libraries src)
+ (module_systems esm))
