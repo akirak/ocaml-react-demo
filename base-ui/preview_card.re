@@ -1,10 +1,10 @@
-module Popover = {
-  /* https://base-ui.com/react/components/popover */
+module PreviewCard = {
+  /* https://base-ui.com/react/components/preview-card */
 
   module Root = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~defaultOpen: bool=?,
@@ -13,7 +13,6 @@ module Popover = {
         ~actionsRef: Js.Json.t=?,
         ~defaultTriggerId: string=?,
         ~handle: Js.Json.t=?,
-        ~modal: Js.Json.t=?,
         ~onOpenChangeComplete: Js.Json.t=?,
         ~triggerId: string=?,
         ~children: React.element=?,
@@ -21,21 +20,15 @@ module Popover = {
   };
 
   module Trigger = {
-    type state = {
-      disabled: bool,
-      [@mel.as "open"] open_: bool,
-    };
+    type state = {open_: bool};
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~handle: Js.Json.t=?,
-        ~nativeButton: bool=?,
         ~payload: Js.Json.t=?,
-        ~openOnHover: bool=?,
         ~delay: int=?,
         ~closeDelay: int=?,
-        ~id: string=?,
         ~className: Js.Json.t=?,
         ~style: Js.Json.t=?,
         ~render: Js.Json.t=?,
@@ -46,7 +39,7 @@ module Popover = {
   module Portal = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~container: Js.Json.t=?,
@@ -64,7 +57,7 @@ module Popover = {
       transitionStatus: string,
     };
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -83,7 +76,7 @@ module Popover = {
       instant: option(string),
     };
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~disableAnchorTracking: bool=?,
@@ -114,7 +107,7 @@ module Popover = {
       transitionStatus: string,
     };
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -133,7 +126,7 @@ module Popover = {
       instant: option(string),
     };
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -143,18 +136,20 @@ module Popover = {
       ) => React.element = "Arrow";
   };
 
-  module Close = {
-    type state = {disabled: bool};
+  module Viewport = {
+    type state = {
+      activationDirection: option(string),
+      transitioning: bool,
+      instant: option(string),
+    };
 
-    [@mel.module "@base-ui/react/popover"] [@react.component]
+    [@mel.module "@base-ui/react/preview-card"] [@react.component]
     external make:
       (
-        ~nativeButton: bool=?,
+        ~children: React.element=?,
         ~className: Js.Json.t=?,
         ~style: Js.Json.t=?,
         ~render: Js.Json.t=?,
-        ~children: React.element=?,
-      ) => React.element = "Close";
+      ) => React.element = "Viewport";
   };
 };
-

@@ -29,7 +29,7 @@ module Accordion = {
     type state = {
       hidden: bool,
       index: int,
-      open: bool,
+      open_: bool,
       value: array(Js.Json.t),
       disabled: bool,
       orientation: string,
@@ -52,7 +52,7 @@ module Accordion = {
     type state = {
       hidden: bool,
       index: int,
-      open: bool,
+      open_: bool,
       value: array(Js.Json.t),
       disabled: bool,
       orientation: string,
@@ -72,7 +72,7 @@ module Accordion = {
     type state = {
       hidden: bool,
       index: int,
-      open: bool,
+      open_: bool,
       value: array(Js.Json.t),
       disabled: bool,
       orientation: string,
@@ -94,7 +94,7 @@ module Accordion = {
       transitionStatus: string,
       hidden: bool,
       index: int,
-      open: bool,
+      open_: bool,
       value: array(Js.Json.t),
       disabled: bool,
       orientation: string,

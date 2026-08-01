@@ -2,7 +2,7 @@ module Meter = {
   /* https://base-ui.com/react/components/meter */
 
   module Root = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/meter"] [@react.component]
     external make:
@@ -22,7 +22,7 @@ module Meter = {
   };
 
   module Value = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/meter"] [@react.component]
     external make:
@@ -35,7 +35,7 @@ module Meter = {
   };
 
   module Indicator = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/meter"] [@react.component]
     external make:
@@ -48,7 +48,7 @@ module Meter = {
   };
 
   module Track = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/meter"] [@react.component]
     external make:
@@ -61,7 +61,7 @@ module Meter = {
   };
 
   module Label = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/meter"] [@react.component]
     external make:

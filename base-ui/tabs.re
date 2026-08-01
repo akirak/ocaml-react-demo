@@ -7,7 +7,7 @@ module Tabs = {
       tabActivationDirection: string,
     };
 
-    [@mel.module "@base-ui/react/tabs"] [@react.component]
+    [@mel.module "@base-ui/react/tabs"] [@mel.scope "Tabs"] [@react.component]
     external make:
       (
         ~defaultValue: Js.Json.t=?,
@@ -27,7 +27,7 @@ module Tabs = {
       tabActivationDirection: string,
     };
 
-    [@mel.module "@base-ui/react/tabs"] [@react.component]
+    [@mel.module "@base-ui/react/tabs"] [@mel.scope "Tabs"] [@react.component]
     external make:
       (
         ~activateOnFocus: bool=?,
@@ -47,7 +47,7 @@ module Tabs = {
       tabActivationDirection: string,
     };
 
-    [@mel.module "@base-ui/react/tabs"] [@react.component]
+    [@mel.module "@base-ui/react/tabs"] [@mel.scope "Tabs"] [@react.component]
     external make:
       (
         ~value: Js.Json.t,
@@ -68,7 +68,7 @@ module Tabs = {
       tabActivationDirection: string,
     };
 
-    [@mel.module "@base-ui/react/tabs"] [@react.component]
+    [@mel.module "@base-ui/react/tabs"] [@mel.scope "Tabs"] [@react.component]
     external make:
       (
         ~value: Js.Json.t,
@@ -88,7 +88,7 @@ module Tabs = {
       tabActivationDirection: string,
     };
 
-    [@mel.module "@base-ui/react/tabs"] [@react.component]
+    [@mel.module "@base-ui/react/tabs"] [@mel.scope "Tabs"] [@react.component]
     external make:
       (
         ~renderBeforeHydration: bool=?,
@@ -99,4 +99,3 @@ module Tabs = {
       ) => React.element = "Indicator";
   };
 };
-

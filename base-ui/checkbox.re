@@ -15,7 +15,7 @@ module Checkbox = {
       focused: bool,
     };
 
-    [@mel.module "@base-ui/react/checkbox"] [@react.component]
+    [@mel.module "@base-ui/react/checkbox"] [@mel.scope "Checkbox"] [@react.component]
     external make:
       (
         ~name: string=?,
@@ -55,7 +55,7 @@ module Checkbox = {
       focused: bool,
     };
 
-    [@mel.module "@base-ui/react/checkbox"] [@react.component]
+    [@mel.module "@base-ui/react/checkbox"] [@mel.scope "Checkbox"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -66,4 +66,3 @@ module Checkbox = {
       ) => React.element = "Indicator";
   };
 };
-

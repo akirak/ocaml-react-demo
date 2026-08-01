@@ -1,24 +1,38 @@
-module Dialog = {
-  /* https://base-ui.com/react/components/dialog */
+module Drawer = {
+  /* https://base-ui.com/react/components/drawer */
 
   module Root = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~defaultOpen: bool=?,
         ~open_: bool=?,
         ~onOpenChange: Js.Json.t=?,
+        ~snapPoints: array(Js.Json.t)=?,
+        ~defaultSnapPoint: Js.Json.t=?,
+        ~snapPoint: Js.Json.t=?,
+        ~onSnapPointChange: Js.Json.t=?,
         ~actionsRef: Js.Json.t=?,
         ~defaultTriggerId: string=?,
         ~disablePointerDismissal: bool=?,
         ~handle: Js.Json.t=?,
         ~modal: Js.Json.t=?,
         ~onOpenChangeComplete: Js.Json.t=?,
+        ~snapToSequentialPoints: bool=?,
+        ~swipeDirection: string=?,
         ~triggerId: string=?,
         ~children: React.element=?,
       ) => React.element = "Root";
+  };
+
+  module Provider = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (~children: React.element=?) => React.element = "Provider";
   };
 
   module Trigger = {
@@ -27,7 +41,7 @@ module Dialog = {
       [@mel.as "open"] open_: bool,
     };
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~handle: Js.Json.t=?,
@@ -44,7 +58,7 @@ module Dialog = {
   module Portal = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~container: Js.Json.t=?,
@@ -62,7 +76,7 @@ module Dialog = {
       transitionStatus: string,
     };
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~forceRender: bool=?,
@@ -77,15 +91,11 @@ module Dialog = {
     type state = {
       [@mel.as "open"] open_: bool,
       transitionStatus: string,
-      nested: bool,
-      nestedDialogOpen: bool,
     };
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
-        ~initialFocus: Js.Json.t=?,
-        ~finalFocus: Js.Json.t=?,
         ~className: Js.Json.t=?,
         ~style: Js.Json.t=?,
         ~render: Js.Json.t=?,
@@ -93,10 +103,26 @@ module Dialog = {
       ) => React.element = "Popup";
   };
 
+  module Content = {
+    type state = {
+      [@mel.as "open"] open_: bool,
+      transitionStatus: string,
+    };
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (
+        ~className: Js.Json.t=?,
+        ~style: Js.Json.t=?,
+        ~render: Js.Json.t=?,
+        ~children: React.element=?,
+      ) => React.element = "Content";
+  };
+
   module Title = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -109,7 +135,7 @@ module Dialog = {
   module Description = {
     type state = {empty: unit};
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -122,7 +148,7 @@ module Dialog = {
   module Close = {
     type state = {disabled: bool};
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~nativeButton: bool=?,
@@ -137,11 +163,9 @@ module Dialog = {
     type state = {
       [@mel.as "open"] open_: bool,
       transitionStatus: string,
-      nested: bool,
-      nestedDialogOpen: bool,
     };
 
-    [@mel.module "@base-ui/react/dialog"] [@react.component]
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -150,5 +174,64 @@ module Dialog = {
         ~children: React.element=?,
       ) => React.element = "Viewport";
   };
-};
 
+  module Handle = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (
+        ~className: Js.Json.t=?,
+        ~style: Js.Json.t=?,
+        ~render: Js.Json.t=?,
+        ~children: React.element=?,
+      ) => React.element = "Handle";
+  };
+
+  module Indent = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (
+        ~className: Js.Json.t=?,
+        ~style: Js.Json.t=?,
+        ~render: Js.Json.t=?,
+        ~children: React.element=?,
+      ) => React.element = "Indent";
+  };
+
+  module IndentBackground = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (
+        ~className: Js.Json.t=?,
+        ~style: Js.Json.t=?,
+        ~render: Js.Json.t=?,
+        ~children: React.element=?,
+      ) => React.element = "IndentBackground";
+  };
+
+  module SwipeArea = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (
+        ~className: Js.Json.t=?,
+        ~style: Js.Json.t=?,
+        ~render: Js.Json.t=?,
+        ~children: React.element=?,
+      ) => React.element = "SwipeArea";
+  };
+
+  module VirtualKeyboardProvider = {
+    type state = {empty: unit};
+
+    [@mel.module "@base-ui/react/drawer"] [@react.component]
+    external make:
+      (~children: React.element=?) => React.element = "VirtualKeyboardProvider";
+  };
+};

@@ -4,7 +4,7 @@ module Progress = {
   module Root = {
     type state = {status: string};
 
-    [@mel.module "@base-ui/react/progress"] [@react.component]
+    [@mel.module "@base-ui/react/progress"] [@mel.scope "Progress"] [@react.component]
     external make:
       (
         ~value: Js.Json.t,
@@ -24,7 +24,7 @@ module Progress = {
   module Value = {
     type state = {status: string};
 
-    [@mel.module "@base-ui/react/progress"] [@react.component]
+    [@mel.module "@base-ui/react/progress"] [@mel.scope "Progress"] [@react.component]
     external make:
       (
         ~children: Js.Json.t=?,
@@ -37,7 +37,7 @@ module Progress = {
   module Indicator = {
     type state = {status: string};
 
-    [@mel.module "@base-ui/react/progress"] [@react.component]
+    [@mel.module "@base-ui/react/progress"] [@mel.scope "Progress"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -50,7 +50,7 @@ module Progress = {
   module Track = {
     type state = {status: string};
 
-    [@mel.module "@base-ui/react/progress"] [@react.component]
+    [@mel.module "@base-ui/react/progress"] [@mel.scope "Progress"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -63,7 +63,7 @@ module Progress = {
   module Label = {
     type state = {status: string};
 
-    [@mel.module "@base-ui/react/progress"] [@react.component]
+    [@mel.module "@base-ui/react/progress"] [@mel.scope "Progress"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -73,4 +73,3 @@ module Progress = {
       ) => React.element = "Label";
   };
 };
-

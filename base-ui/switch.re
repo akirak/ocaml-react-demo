@@ -14,7 +14,7 @@ module Switch = {
       focused: bool,
     };
 
-    [@mel.module "@base-ui/react/switch"] [@react.component]
+    [@mel.module "@base-ui/react/switch"] [@mel.scope "Switch"] [@react.component]
     external make:
       (
         ~name: string=?,
@@ -50,7 +50,7 @@ module Switch = {
       focused: bool,
     };
 
-    [@mel.module "@base-ui/react/switch"] [@react.component]
+    [@mel.module "@base-ui/react/switch"] [@mel.scope "Switch"] [@react.component]
     external make:
       (
         ~className: Js.Json.t=?,
@@ -60,4 +60,3 @@ module Switch = {
       ) => React.element = "Thumb";
   };
 };
-

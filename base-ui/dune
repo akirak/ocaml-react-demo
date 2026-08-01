@@ -1,24 +1,43 @@
 (library
  (name base_ui)
 (modules base_ui
-          button
           accordion
           alert_dialog
+          autocomplete
           avatar
+          button
           checkbox
           checkbox_group
           collapsible
+          combobox
+          context_menu
           dialog
+          drawer
+          field
+          fieldset
+          form
           input
+          menu
+          menubar
           meter
+          navigation_menu
+          number_field
+          otp_field
           popover
+          preview_card
           progress
           radio
           radio_group
+          scroll_area
+          select
           separator
+          slider
           switch
           tabs
+          toast
           toggle
+          toggle_group
+          toolbar
           tooltip
  )
  (modes melange)

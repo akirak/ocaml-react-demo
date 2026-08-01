@@ -2,13 +2,13 @@ module AlertDialog = {
   /* https://base-ui.com/react/components/alert-dialog */
 
   module Root = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/alert-dialog"] [@react.component]
     external make:
       (
         ~defaultOpen: bool=?,
-        ~open: bool=?,
+        ~open_: bool=?,
         ~onOpenChange: Js.Json.t=?,
         ~actionsRef: Js.Json.t=?,
         ~defaultTriggerId: string=?,
@@ -22,7 +22,7 @@ module AlertDialog = {
   module Trigger = {
     type state = {
       disabled: bool,
-      open: bool,
+      [@mel.as "open"] open_: bool,
     };
 
     [@mel.module "@base-ui/react/alert-dialog"] [@react.component]
@@ -40,7 +40,7 @@ module AlertDialog = {
   };
 
   module Portal = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/alert-dialog"] [@react.component]
     external make:
@@ -56,7 +56,7 @@ module AlertDialog = {
 
   module Backdrop = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       transitionStatus: string,
     };
 
@@ -73,7 +73,7 @@ module AlertDialog = {
 
   module Popup = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       transitionStatus: string,
       nested: bool,
       nestedDialogOpen: bool,
@@ -92,7 +92,7 @@ module AlertDialog = {
   };
 
   module Title = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/alert-dialog"] [@react.component]
     external make:
@@ -105,7 +105,7 @@ module AlertDialog = {
   };
 
   module Description = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/alert-dialog"] [@react.component]
     external make:
@@ -133,7 +133,7 @@ module AlertDialog = {
 
   module Viewport = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       transitionStatus: string,
       nested: bool,
       nestedDialogOpen: bool,

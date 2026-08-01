@@ -3,7 +3,7 @@ module Collapsible = {
 
   module Root = {
     type state = {
-      open: bool,
+      open_: bool,
       disabled: bool,
       transitionStatus: string,
     };
@@ -12,7 +12,7 @@ module Collapsible = {
     external make:
       (
         ~defaultOpen: bool=?,
-        ~open: bool=?,
+        ~open_: bool=?,
         ~onOpenChange: Js.Json.t=?,
         ~disabled: bool=?,
         ~className: Js.Json.t=?,
@@ -24,7 +24,7 @@ module Collapsible = {
 
   module Trigger = {
     type state = {
-      open: bool,
+      open_: bool,
       disabled: bool,
       transitionStatus: string,
     };
@@ -43,7 +43,7 @@ module Collapsible = {
   module Panel = {
     type state = {
       transitionStatus: string,
-      open: bool,
+      open_: bool,
       disabled: bool,
     };
 

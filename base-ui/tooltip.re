@@ -2,13 +2,13 @@ module Tooltip = {
   /* https://base-ui.com/react/components/tooltip */
 
   module Root = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/tooltip"] [@react.component]
     external make:
       (
         ~defaultOpen: bool=?,
-        ~open: bool=?,
+        ~open_: bool=?,
         ~onOpenChange: Js.Json.t=?,
         ~actionsRef: Js.Json.t=?,
         ~defaultTriggerId: string=?,
@@ -23,7 +23,7 @@ module Tooltip = {
   };
 
   module Provider = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/tooltip"] [@react.component]
     external make:
@@ -36,7 +36,7 @@ module Tooltip = {
   };
 
   module Trigger = {
-    type state = {open: bool};
+    type state = {open_: bool};
 
     [@mel.module "@base-ui/react/tooltip"] [@react.component]
     external make:
@@ -55,7 +55,7 @@ module Tooltip = {
   };
 
   module Portal = {
-    type state = {};
+    type state = {empty: unit};
 
     [@mel.module "@base-ui/react/tooltip"] [@react.component]
     external make:
@@ -71,7 +71,7 @@ module Tooltip = {
 
   module Positioner = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       side: string,
       align: string,
       anchorHidden: bool,
@@ -102,7 +102,7 @@ module Tooltip = {
 
   module Popup = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       side: string,
       align: string,
       instant: option(string),
@@ -121,7 +121,7 @@ module Tooltip = {
 
   module Arrow = {
     type state = {
-      open: bool,
+      [@mel.as "open"] open_: bool,
       side: string,
       align: string,
       uncentered: bool,
@@ -155,4 +155,3 @@ module Tooltip = {
       ) => React.element = "Viewport";
   };
 };
-
