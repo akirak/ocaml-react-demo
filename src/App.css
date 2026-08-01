@@ -1,3 +1,8 @@
+/* Required by Base UI to make portals work */
+.root {
+    isolation: isolate;
+}
+
 body {
     color: oklch(0.7 0.1 147);
 }
