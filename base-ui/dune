@@ -1,6 +1,26 @@
 (library
  (name base_ui)
- (modules base_ui)
+(modules base_ui
+          button
+          accordion
+          alert_dialog
+          avatar
+          checkbox
+          checkbox_group
+          collapsible
+          dialog
+          input
+          meter
+          popover
+          progress
+          radio
+          radio_group
+          separator
+          switch
+          tabs
+          toggle
+          tooltip
+ )
  (modes melange)
  (preprocess
   (pps melange.ppx reason-react-ppx))
