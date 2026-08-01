@@ -1,5 +1,5 @@
 // Based on https://github.com/lessp/react-ml-minimal-template/blob/main/public/index.html
 
-import "../src/App.css";
+import "../app/App.css";
 
-import "../_build/default/src/src/App.js";
+import "../_build/default/app/app/App.js";

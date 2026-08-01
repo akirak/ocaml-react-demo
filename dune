@@ -1,6 +1,6 @@
 (dirs :standard \ node_modules)
 
 (melange.emit
- (target src)
- (libraries src)
+ (target app)
+ (libraries app)
  (module_systems esm))

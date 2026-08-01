@@ -1,5 +1,5 @@
 (library
- (name src)
+ (name app)
  (modes melange)
  (libraries reason-react base_ui)
  (preprocess
