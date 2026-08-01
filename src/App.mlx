@@ -1,8 +1,13 @@
+module Button = Base_ui.Button
+
 module App = struct
 
   let[@react.component] make () =
     <div>
       <h1> (React.string "Hello, React.ml!") </h1>
+      <Button nativeButton=true>
+        (React.string "Click me")
+      </Button>
     </div>
   ;;
 end
