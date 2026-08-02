@@ -59,4 +59,3 @@ module Collapsible = {
       ) => React.element = "Panel";
   };
 };
-

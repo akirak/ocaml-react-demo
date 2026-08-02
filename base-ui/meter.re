@@ -73,4 +73,3 @@ module Meter = {
       ) => React.element = "Label";
   };
 };
-

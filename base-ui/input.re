@@ -21,4 +21,3 @@ module Input = {
       ~render: Js.Json.t=?,
     ) => React.element = "Input";
 };
-

@@ -30,4 +30,3 @@ module RadioGroup = {
       ~children: React.element=?,
     ) => React.element = "RadioGroup";
 };
-

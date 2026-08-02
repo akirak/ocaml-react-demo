@@ -21,4 +21,3 @@ module Toggle = {
       ~children: React.element=?,
     ) => React.element = "Toggle";
 };
-

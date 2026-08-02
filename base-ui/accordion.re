@@ -112,4 +112,3 @@ module Accordion = {
       ) => React.element = "Panel";
   };
 };
-

@@ -24,4 +24,3 @@ module CheckboxGroup = {
       ~children: React.element=?,
     ) => React.element = "CheckboxGroup";
 };
-

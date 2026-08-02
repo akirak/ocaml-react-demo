@@ -12,4 +12,3 @@ module Separator = {
       ~render: Js.Json.t=?,
     ) => React.element = "Separator";
 };
-

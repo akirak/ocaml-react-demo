@@ -45,4 +45,3 @@ module Avatar = {
       ) => React.element = "Fallback";
   };
 };
-

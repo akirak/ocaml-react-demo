@@ -37,4 +37,3 @@ module Button = {
       ~children: React.element=?,
     ) => React.element = "Button";
 };
-

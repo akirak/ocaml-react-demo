@@ -55,4 +55,3 @@ module Radio = {
       ) => React.element = "Indicator";
   };
 };
-
