@@ -30,7 +30,8 @@ module Json = struct
         |> String.concat "," |> Printf.sprintf "{%s}"
 end
 
-type page = {component: string; props: (string * Json.t) list; title: string}
+type page =
+  {route: App_routes.t; props: (string * Json.t) list; title: string}
 
 let port =
   ref
@@ -48,7 +49,8 @@ let request_url request =
 let page_json request page =
   Json.to_string
     (Object
-       [ ("component", String page.component)
+       [ ( "component"
+         , String (App_routes.component (App_routes.page page.route)) )
        ; ("props", Object page.props)
        ; ("url", String (request_url request))
        ; ("version", Null) ] )
@@ -104,14 +106,14 @@ let require_get request handler =
 let home request =
   require_get request (fun () ->
       inertia_response request
-        { component= "home"
+        { route= App_routes.home ()
         ; props= [("errors", Json.Object [])]
         ; title= "React.ml Inertia Demo" } )
 
 let about request =
   require_get request (fun () ->
       inertia_response request
-        { component= "about"
+        { route= App_routes.about ()
         ; props=
             [ ("systemVersion", Json.String Sys.ocaml_version)
             ; ("errors", Json.Object []) ]
@@ -120,11 +122,11 @@ let about request =
 let greet name request =
   require_get request (fun () ->
       inertia_response request
-        { component= "greet"
+        { route= App_routes.greet name
         ; props= [("name", Json.String name); ("errors", Json.Object [])]
         ; title= "Greet" } )
 
-module App_routes = struct
+module Server_routes = struct
   let home_path () = Routes.nil
 
   let about_path () = Routes.(s "about" /? nil)
@@ -140,7 +142,9 @@ module App_routes = struct
 end
 
 let handler request =
-  match Routes.match' App_routes.router ~target:(Request.path request) with
+  match
+    Routes.match' Server_routes.router ~target:(Request.path request)
+  with
   | FullMatch route -> route request
   | MatchWithTrailingSlash _ ->
       let path = Request.path request in

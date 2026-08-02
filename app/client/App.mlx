@@ -6,24 +6,24 @@ module Slider = Base_ui.Slider
 module Switch = Base_ui.Switch
 module Tabs = Base_ui.Tabs
 
-let href value = Js.Json.string value
+let href route = Js.Json.string (App_routes.path route)
 
 module Layout = struct
   let[@react.component] make ~children =
     <div className="shell">
       <header className="site-header">
         <nav className="site-nav" ariaLabel="Primary navigation">
-          <Inertia_react.Link href=(href "/")>
+          <Inertia_react.Link href=(href (App_routes.home ()))>
             (React.string "React.ml Inertia Demo")
           </Inertia_react.Link>
           <div className="site-links">
-            <Inertia_react.Link href=(href "/")>
+            <Inertia_react.Link href=(href (App_routes.home ()))>
               (React.string "Components")
             </Inertia_react.Link>
-            <Inertia_react.Link href=(href "/about")>
+            <Inertia_react.Link href=(href (App_routes.about ()))>
               (React.string "About")
             </Inertia_react.Link>
-            <Inertia_react.Link href=(href "/greet/Inertia")>
+            <Inertia_react.Link href=(href (App_routes.greet "Inertia"))>
               (React.string "Greeting")
             </Inertia_react.Link>
           </div>
@@ -156,11 +156,12 @@ external options :
   Js.Json.t = ""
 [@@mel.obj]
 
-let resolve = function
-  | "home" -> Obj.magic Home.make
-  | "about" -> Obj.magic About.make
-  | "greet" -> Obj.magic Greet.make
-  | name -> failwith ("Unknown Inertia page: " ^ name)
+let resolve name =
+  match App_routes.page_of_component name with
+  | Some Home -> Obj.magic Home.make
+  | Some About -> Obj.magic About.make
+  | Some Greet -> Obj.magic Greet.make
+  | None -> failwith ("Unknown Inertia page: " ^ name)
 
 let setup args =
   let root = ReactDOM.Client.createRoot (setup_element args) in
