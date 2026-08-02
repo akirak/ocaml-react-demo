@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "crista": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": []
+      },
+      "locked": {
+        "lastModified": 1785670937,
+        "narHash": "sha256-JTPN6/nV8jifk2O8xAiCP5YkLXUCyofhM4nj6//ddkU=",
+        "owner": "akirak",
+        "repo": "crista",
+        "rev": "22a1f70c9db372cd84b1515503f5463676c2d65c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akirak",
+        "repo": "crista",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -36,6 +57,7 @@
     },
     "root": {
       "inputs": {
+        "crista": "crista",
         "nixpkgs": "nixpkgs"
       }
     }

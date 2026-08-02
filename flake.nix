@@ -2,6 +2,13 @@
   inputs = {
     nixpkgs.url = "github:nix-ocaml/nix-overlays";
     # systems.url = "github:nix-systems/default";
+
+    # OCaml dependencies
+    crista = {
+      url = "github:akirak/crista";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "";
+    };
   };
 
   outputs =
@@ -9,7 +16,7 @@
       nixpkgs,
       self,
       ...
-    }:
+    }@inputs:
     let
       eachSystem =
         f:
@@ -21,7 +28,30 @@
                 # You can set the OCaml version to a particular release. Also, you
                 # may have to pin some packages to a particular revision if the
                 # devshell fail to build. This should be resolved in the upstream.
-                ocamlPackages = super.ocaml-ng.ocamlPackages_5_5;
+                ocamlPackages = super.ocaml-ng.ocamlPackages_5_5.overrideScope (
+                  ofinal: oprev: {
+                    crista = oprev.buildDunePackage {
+                      inherit (inputs.crista.packages.${system}.default)
+                        pname
+                        version
+                        ;
+
+                      src = inputs.crista.outPath;
+
+                      buildInputs = with ofinal; [ ocaml-syntax-shims ];
+
+                      propagatedBuildInputs = with ofinal; [
+                        miou
+                        parseff
+                      ];
+
+                      checkInputs = with ofinal; [
+                        alcotest
+                        routes
+                      ];
+                    };
+                  }
+                );
               }
             )
           )
