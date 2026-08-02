@@ -1,0 +1,8 @@
+(library
+ (name inertia_react_bindings)
+ (wrapped false)
+ (modules inertia_react)
+ (modes melange)
+ (preprocess
+  (pps melange.ppx reason-react-ppx))
+ (libraries reason-react))
