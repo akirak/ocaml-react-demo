@@ -10,4 +10,7 @@
   (preprocess
    (run mlx-pp %{input-file}))))
 
-(name react_router_demo)
+(name react_demo)
+
+(package
+ (name react_demo))

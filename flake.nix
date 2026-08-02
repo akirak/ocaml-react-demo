@@ -45,10 +45,7 @@
                         parseff
                       ];
 
-                      checkInputs = with ofinal; [
-                        alcotest
-                        routes
-                      ];
+                      doCheck = false;
                     };
                   }
                 );
@@ -61,7 +58,7 @@
       packages = eachSystem (
         _system: pkgs: with pkgs; {
           default = ocamlPackages.buildDunePackage {
-            pname = "react_router_demo";
+            pname = "react_demo";
             version = "0";
             duneVersion = "3";
             src = self.outPath;
@@ -69,8 +66,8 @@
             buildInputs = with ocamlPackages; [ ocaml-syntax-shims ];
 
             propagatedBuildInputs = with ocamlPackages; [
-              # yojson
-              # ppx_yojson_conv
+              crista
+              routes
             ];
           };
         }
