@@ -2,7 +2,3 @@
 .root {
     isolation: isolate;
 }
-
-body {
-    color: oklch(0.7 0.1 147);
-}
