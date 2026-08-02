@@ -1,0 +1,31 @@
+type setup_args;
+
+[@mel.get] external setup_element: setup_args => Dom.element = "el";
+[@mel.get] external setup_app: setup_args => Js.Json.t = "App";
+[@mel.get] external setup_props: setup_args => Js.Json.t = "props";
+
+[@mel.obj]
+external options:
+  (~resolve: string => Js.Json.t, ~setup: setup_args => unit, unit) =>
+  Js.Json.t;
+
+let resolve = name =>
+  switch (App_routes.page_of_component(name)) {
+  | Some(Home) => Obj.magic(Home.make)
+  | Some(About) => Obj.magic(About.make)
+  | Some(Greet) => Obj.magic(Greet.make)
+  | None => failwith("Unknown Inertia page: " ++ name)
+  };
+
+let setup = args => {
+  let root = ReactDOM.Client.createRoot(setup_element(args));
+  let app =
+    React.createElement(
+      Obj.magic(setup_app(args)),
+      Obj.magic(setup_props(args)),
+    );
+  ReactDOM.Client.render(root, <div className="root"> app </div>);
+};
+
+let () =
+  ignore(Inertia_react.createInertiaApp(options(~resolve, ~setup, ())));

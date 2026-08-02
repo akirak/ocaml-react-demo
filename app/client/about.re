@@ -1,0 +1,13 @@
+let [@react.component] make =
+  (~systemVersion) => {
+    let content =
+      <>
+        <Inertia_react.Head title="About" />
+        <section className="hero">
+          <p className="eyebrow"> {React.string("Server props")} </p>
+          <h1> {React.string("About")} </h1>
+          <p> {React.string("OCaml system version: " ++ systemVersion)} </p>
+        </section>
+      </>;
+    Route_common.Layout.make(~children=content);
+  };
