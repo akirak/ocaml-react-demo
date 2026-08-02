@@ -1,0 +1,96 @@
+open Crista
+
+module Json = struct
+  type t = Null | String of string | Object of (string * t) list
+
+  let escape value =
+    let buffer = Buffer.create (String.length value + 8) in
+    String.iter
+      (function
+        | '"' -> Buffer.add_string buffer "\\\""
+        | '\\' -> Buffer.add_string buffer "\\\\"
+        | '\b' -> Buffer.add_string buffer "\\b"
+        | '\012' -> Buffer.add_string buffer "\\f"
+        | '\n' -> Buffer.add_string buffer "\\n"
+        | '\r' -> Buffer.add_string buffer "\\r"
+        | '\t' -> Buffer.add_string buffer "\\t"
+        | character when Char.code character < 0x20 ->
+            Printf.bprintf buffer "\\u%04x" (Char.code character)
+        | character -> Buffer.add_char buffer character )
+      value ;
+    Buffer.contents buffer
+
+  let rec to_string = function
+    | Null -> "null"
+    | String value -> Printf.sprintf "\"%s\"" (escape value)
+    | Object fields ->
+        fields
+        |> List.map (fun (name, value) ->
+            Printf.sprintf "\"%s\":%s" (escape name) (to_string value) )
+        |> String.concat "," |> Printf.sprintf "{%s}"
+end
+
+type page =
+  {route: App_routes.t; props: (string * Json.t) list; title: string}
+
+let request_url request =
+  match Request.query request with
+  | None -> Request.path request
+  | Some query -> Request.path request ^ "?" ^ query
+
+let page_json request page =
+  Json.to_string
+    (Object
+       [ ( "component"
+         , String (App_routes.component (App_routes.page page.route)) )
+       ; ("props", Object page.props)
+       ; ("url", String (request_url request))
+       ; ("version", Null) ] )
+
+let client_entrypoint () =
+  match Sys.getenv_opt "CLIENT_ENTRYPOINT" with
+  | Some entrypoint -> entrypoint
+  | None -> "http://localhost:5173/main.js"
+
+let document page_json page_title =
+  let open Pure_html in
+  let open HTML in
+  (* Inertia 3 reads the initial page from an application/json script. Escape
+     slashes so a prop containing [</script>] cannot terminate that
+     element. *)
+  let embedded_page_json =
+    String.concat "\\/" (String.split_on_char '/' page_json)
+  in
+  html
+    [lang "en"]
+    [ head []
+        [ meta [charset "UTF-8"]
+        ; meta
+            [name "viewport"; content "width=device-width, initial-scale=1.0"]
+        ; title [] "%s" page_title ]
+    ; body []
+        [ script
+            [string_attr "data-page" "app"; type_ "application/json"]
+            "%s" embedded_page_json
+        ; div [id "app"] []
+        ; script [type_ "module"; src "%s" (client_entrypoint ())] "" ] ]
+  |> to_string
+
+let inertia_headers = Headers.of_list [("vary", "X-Inertia")]
+
+let inertia_response request page =
+  let json = page_json request page in
+  match Request.header "x-inertia" request with
+  | Some value when String.equal (String.lowercase_ascii value) "true" ->
+      Response.json
+        ~headers:(Headers.add "x-inertia" "true" inertia_headers)
+        json
+  | _ -> Response.html ~headers:inertia_headers (document json page.title)
+
+let require_get request handler =
+  match request.Request.meth with
+  | "GET" | "HEAD" -> handler ()
+  | _ ->
+      Response.text
+        ~headers:(Headers.of_list [("allow", "GET, HEAD")])
+        ~status:405 "Method not allowed\n"
