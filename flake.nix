@@ -68,6 +68,7 @@
             propagatedBuildInputs = with ocamlPackages; [
               crista
               routes
+              pure-html
             ];
           };
         }

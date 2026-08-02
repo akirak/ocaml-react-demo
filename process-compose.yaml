@@ -14,9 +14,19 @@ processes:
       install:
         condition: process_completed_successfully
   vite:
-    command: bash -lc 'while [ ! -f _build/default/app/app/App.js ]; do sleep 0.2; done; pnpm run dev'
+    command: bash -lc 'while [ ! -f _build/default/app/app/client/App.js ]; do sleep 0.2; done; pnpm run dev'
     depends_on:
       install:
         condition: process_completed_successfully
       melange:
+        condition: process_started
+  server:
+    command: dune exec react_demo
+    environment:
+      - "CLIENT_ENTRYPOINT=${CLIENT_ENTRYPOINT:-http://localhost:5173/main.js}"
+      - "PORT=${PORT:-8000}"
+    depends_on:
+      melange:
+        condition: process_started
+      vite:
         condition: process_started

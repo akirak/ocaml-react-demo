@@ -4,6 +4,11 @@ import {browserslistToTargets} from 'lightningcss';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    cors: {
+      origin: /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/,
+    },
+  },
   css: {
     transformer: 'lightningcss',
     lightningcss: {

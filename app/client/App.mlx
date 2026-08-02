@@ -6,92 +6,174 @@ module Slider = Base_ui.Slider
 module Switch = Base_ui.Switch
 module Tabs = Base_ui.Tabs
 
-module App = struct
+let href value = Js.Json.string value
 
-  let[@react.component] make () =
-    <div>
-      <h1> (React.string "Hello, React.ml!") </h1>
-
-      <section>
-        <h2> (React.string "Button") </h2>
-        <Button nativeButton=true>
-          (React.string "Click me")
-        </Button>
-      </section>
-
-      <section>
-        <h2> (React.string "Input") </h2>
-        <Input />
-      </section>
-
-      <section>
-        <h2> (React.string "Checkbox") </h2>
-        <Checkbox.Root defaultChecked=true>
-          <Checkbox.Indicator />
-          (React.string "Accept terms")
-        </Checkbox.Root>
-      </section>
-
-      <section>
-        <h2> (React.string "Switch") </h2>
-        <Switch.Root defaultChecked=true>
-          <Switch.Thumb />
-        </Switch.Root>
-      </section>
-
-      <section>
-        <h2> (React.string "Slider") </h2>
-        <Slider.Root
-          defaultValue=(Js.Json.array [|Js.Json.number 40.0|])
-          min=0.0
-          max=100.0
-        >
-          <Slider.Control>
-            <Slider.Track>
-              <Slider.Indicator />
-            </Slider.Track>
-            <Slider.Thumb />
-          </Slider.Control>
-        </Slider.Root>
-      </section>
-
-      <section>
-        <h2> (React.string "Progress") </h2>
-        <Progress.Root value=(Js.Json.number 65.0)>
-          <Progress.Track>
-            <Progress.Indicator />
-          </Progress.Track>
-        </Progress.Root>
-      </section>
-
-      <section>
-        <h2> (React.string "Tabs") </h2>
-        <Tabs.Root defaultValue=(Js.Json.string "one")>
-          <Tabs.List>
-            <Tabs.Tab value=(Js.Json.string "one")>
-              (React.string "First")
-            </Tabs.Tab>
-            <Tabs.Tab value=(Js.Json.string "two")>
-              (React.string "Second")
-            </Tabs.Tab>
-          </Tabs.List>
-          <Tabs.Panel value=(Js.Json.string "one")>
-            (React.string "Content of the first tab.")
-          </Tabs.Panel>
-          <Tabs.Panel value=(Js.Json.string "two")>
-            (React.string "Content of the second tab.")
-          </Tabs.Panel>
-        </Tabs.Root>
-      </section>
+module Layout = struct
+  let[@react.component] make ~children =
+    <div className="shell">
+      <header className="site-header">
+        <nav className="site-nav" ariaLabel="Primary navigation">
+          <Inertia_react.Link href=(href "/")>
+            (React.string "React.ml Inertia Demo")
+          </Inertia_react.Link>
+          <div className="site-links">
+            <Inertia_react.Link href=(href "/")>
+              (React.string "Components")
+            </Inertia_react.Link>
+            <Inertia_react.Link href=(href "/about")>
+              (React.string "About")
+            </Inertia_react.Link>
+            <Inertia_react.Link href=(href "/greet/Inertia")>
+              (React.string "Greeting")
+            </Inertia_react.Link>
+          </div>
+        </nav>
+      </header>
+      <main className="page"> children </main>
     </div>
   ;;
 end
 
+module Home = struct
+  let[@react.component] make () =
+    <Layout>
+      <Inertia_react.Head title="React.ml Inertia Demo" />
+      <div className="stack">
+        <section className="hero">
+          <p className="eyebrow"> (React.string "OCaml + Melange") </p>
+          <h1> (React.string "An Inertia-powered component gallery") </h1>
+          <p>
+            (React.string
+               "This page is selected by the OCaml server and rendered by React without a separate client-side router.")
+          </p>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Button") </h2>
+          <Button nativeButton=true> (React.string "Click me") </Button>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Input") </h2>
+          <Input />
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Checkbox") </h2>
+          <Checkbox.Root defaultChecked=true>
+            <Checkbox.Indicator />
+            (React.string "Accept terms")
+          </Checkbox.Root>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Switch") </h2>
+          <Switch.Root defaultChecked=true> <Switch.Thumb /> </Switch.Root>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Slider") </h2>
+          <Slider.Root
+            defaultValue=(Js.Json.array [|Js.Json.number 40.0|])
+            min=0.0
+            max=100.0
+          >
+            <Slider.Control>
+              <Slider.Track> <Slider.Indicator /> </Slider.Track>
+              <Slider.Thumb />
+            </Slider.Control>
+          </Slider.Root>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Progress") </h2>
+          <Progress.Root value=(Js.Json.number 65.0)>
+            <Progress.Track> <Progress.Indicator /> </Progress.Track>
+          </Progress.Root>
+        </section>
+
+        <section className="panel">
+          <h2> (React.string "Tabs") </h2>
+          <Tabs.Root defaultValue=(Js.Json.string "one")>
+            <Tabs.List>
+              <Tabs.Tab value=(Js.Json.string "one")>
+                (React.string "First")
+              </Tabs.Tab>
+              <Tabs.Tab value=(Js.Json.string "two")>
+                (React.string "Second")
+              </Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value=(Js.Json.string "one")>
+              (React.string "Content of the first tab.")
+            </Tabs.Panel>
+            <Tabs.Panel value=(Js.Json.string "two")>
+              (React.string "Content of the second tab.")
+            </Tabs.Panel>
+          </Tabs.Root>
+        </section>
+      </div>
+    </Layout>
+  ;;
+end
+
+module About = struct
+  let[@react.component] make ~systemVersion =
+    <Layout>
+      <Inertia_react.Head title="About" />
+      <section className="hero">
+        <p className="eyebrow"> (React.string "Server props") </p>
+        <h1> (React.string "About") </h1>
+        <p>
+          (React.string ("OCaml system version: " ^ systemVersion))
+        </p>
+      </section>
+    </Layout>
+  ;;
+end
+
+module Greet = struct
+  let[@react.component] make ~name =
+    <Layout>
+      <Inertia_react.Head title="Greet" />
+      <section className="hero">
+        <p className="eyebrow"> (React.string "Typed dynamic route") </p>
+        <h1> (React.string ("Hey there, " ^ name ^ "!")) </h1>
+      </section>
+    </Layout>
+  ;;
+end
+
+type setup_args
+
+external setup_element : setup_args -> Dom.element = "el" [@@mel.get]
+external setup_app : setup_args -> Js.Json.t = "App" [@@mel.get]
+external setup_props : setup_args -> Js.Json.t = "props" [@@mel.get]
+
+external options :
+  resolve:(string -> Js.Json.t) ->
+  setup:(setup_args -> unit) ->
+  unit ->
+  Js.Json.t = ""
+[@@mel.obj]
+
+let resolve = function
+  | "home" -> Obj.magic Home.make
+  | "about" -> Obj.magic About.make
+  | "greet" -> Obj.magic Greet.make
+  | name -> failwith ("Unknown Inertia page: " ^ name)
+
+let setup args =
+  let root = ReactDOM.Client.createRoot (setup_element args) in
+  let app =
+    React.createElement
+      (Obj.magic (setup_app args))
+      (Obj.magic (setup_props args))
+  in
+  ReactDOM.Client.render root <div className="root"> app </div>
+;;
+
 let () =
-  match ReactDOM.querySelector "#root" with
-  | None ->
-    Js.Console.error "Failed to start React: couldn't find the #root element"
-  | Some element ->
-    let root = ReactDOM.Client.createRoot element in
-    ReactDOM.Client.render root <App />
+  ignore
+    (Inertia_react.createInertiaApp
+       (options ~resolve ~setup ()))
 ;;

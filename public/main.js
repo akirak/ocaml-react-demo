@@ -2,4 +2,4 @@
 
 import "../app/client/App.css";
 
-import "../_build/default/app/app/App.js";
+import "../_build/default/app/app/client/App.js";
