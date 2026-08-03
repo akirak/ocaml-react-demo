@@ -36,55 +36,6 @@ module Json = struct
 end
 
 module Query = struct
-  let hexadecimal_value = function
-    | '0' .. '9' as character -> Some (Char.code character - Char.code '0')
-    | 'a' .. 'f' as character ->
-        Some (Char.code character - Char.code 'a' + 10)
-    | 'A' .. 'F' as character ->
-        Some (Char.code character - Char.code 'A' + 10)
-    | _ -> None
-
-  let decode value =
-    let decoded = Buffer.create (String.length value) in
-    let rec loop index =
-      if index < String.length value then
-        match value.[index] with
-        | '+' ->
-            Buffer.add_char decoded ' ' ;
-            loop (index + 1)
-        | '%' when index + 2 < String.length value -> (
-          match
-            ( hexadecimal_value value.[index + 1]
-            , hexadecimal_value value.[index + 2] )
-          with
-          | Some high, Some low ->
-              Buffer.add_char decoded (Char.chr ((high lsl 4) lor low)) ;
-              loop (index + 3)
-          | _ ->
-              Buffer.add_char decoded value.[index] ;
-              loop (index + 1) )
-        | character ->
-            Buffer.add_char decoded character ;
-            loop (index + 1)
-    in
-    loop 0 ; Buffer.contents decoded
-
-  let parse query =
-    query |> String.split_on_char '&'
-    |> List.filter_map (fun parameter ->
-        match String.index_opt parameter '=' with
-        | None ->
-            if String.equal parameter "" then None
-            else Some (decode parameter, "")
-        | Some separator ->
-            let name = String.sub parameter 0 separator |> decode in
-            let value =
-              String.sub parameter (separator + 1)
-                (String.length parameter - separator - 1)
-              |> decode
-            in
-            Some (name, value) )
-
   let get name parameters = List.assoc_opt name parameters
 end
 
