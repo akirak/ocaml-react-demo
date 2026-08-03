@@ -13,3 +13,6 @@ sherlodoc-index: odig-odoc
 
 sherlodoc-serve:
     sherlodoc serve
+
+purge-lock:
+    rm -vf "_build/.lock"
