@@ -19,6 +19,10 @@ module Layout = {
               <Inertia_react.Link href={href(App_routes.greet("Inertia"))}>
                 {React.string("Greeting")}
               </Inertia_react.Link>
+              <Inertia_react.Link
+                href={href(App_routes.search(~query="ocaml", ~page=2, ()))}>
+                {React.string("Search")}
+              </Inertia_react.Link>
             </div>
           </nav>
         </header>

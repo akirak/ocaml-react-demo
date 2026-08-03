@@ -14,6 +14,7 @@ let resolve = name =>
   | Some(Home) => Obj.magic(Home.make)
   | Some(About) => Obj.magic(About.make)
   | Some(Greet) => Obj.magic(Greet.make)
+  | Some(Search) => Obj.magic(Search.make)
   | None => failwith("Unknown Inertia page: " ++ name)
   };
 

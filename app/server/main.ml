@@ -13,7 +13,8 @@ let router =
     Routes.
       [ Home.path () @--> Home.handle
       ; About.path () @--> About.handle
-      ; Greet.path () @--> Greet.handle ]
+      ; Greet.path () @--> Greet.handle
+      ; Search.path () @--> Search.handle ]
 
 let handler request =
   match Routes.match' router ~target:(Request.path request) with

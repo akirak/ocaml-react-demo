@@ -18,6 +18,7 @@ The application routes are:
 - `/` — the component gallery
 - `/about` — server-provided OCaml version information
 - `/greet/:name` — a typed dynamic route
+- `/search?q=ocaml&page=2` — decoded search parameters with typed page props
 
 Set `PORT` to change the server port. `CLIENT_ENTRYPOINT` can override the
 client module URL when the frontend assets are served somewhere other than the
