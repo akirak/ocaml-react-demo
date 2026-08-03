@@ -29,25 +29,7 @@
                 # may have to pin some packages to a particular revision if the
                 # devshell fail to build. This should be resolved in the upstream.
                 ocamlPackages = super.ocaml-ng.ocamlPackages_5_5.overrideScope (
-                  ofinal: oprev: {
-                    crista = oprev.buildDunePackage {
-                      inherit (inputs.crista.packages.${system}.default)
-                        pname
-                        version
-                        ;
-
-                      src = inputs.crista.outPath;
-
-                      buildInputs = with ofinal; [ ocaml-syntax-shims ];
-
-                      propagatedBuildInputs = with ofinal; [
-                        miou
-                        parseff
-                      ];
-
-                      doCheck = false;
-                    };
-                  }
+                  inputs.crista.overlays.ocamlPackages
                 );
               }
             )
