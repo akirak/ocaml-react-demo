@@ -1,3 +1,9 @@
 (library
  (name app_routes)
+ (modules app_routes)
  (modes byte native melange))
+
+(test
+ (name test_app_routes)
+ (modules test_app_routes)
+ (libraries app_routes))

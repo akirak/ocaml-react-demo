@@ -1,19 +1,29 @@
-type page = Home | About | Greet | Search
+type about_props = {system_version: string}
 
-type t
+type greet_props = {name: string}
 
-val home : unit -> t
+type search_params = {query: string; page: int}
 
-val about : unit -> t
+type (_, _) route =
+  | Home : (unit, unit) route
+  | About : (unit, about_props) route
+  | Greet : (string, greet_props) route
+  | Search : (search_params, search_params) route
 
-val greet : string -> t
+type destination
 
-val search : ?query:string -> ?page:int -> unit -> t
+type packed_route = Any : ('params, 'props) route -> packed_route
 
-val page : t -> page
+val home : unit -> destination
 
-val component : page -> string
+val about : unit -> destination
 
-val page_of_component : string -> page option
+val greet : string -> destination
 
-val path : t -> string
+val search : ?query:string -> ?page:int -> unit -> destination
+
+val component : ('params, 'props) route -> string
+
+val route_of_component : string -> packed_route option
+
+val path : destination -> string

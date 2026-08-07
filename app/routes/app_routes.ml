@@ -1,27 +1,38 @@
-type page = Home | About | Greet | Search
+type about_props = {system_version: string}
 
-type t = {page: page; path: string}
+type greet_props = {name: string}
 
-let component = function
+type search_params = {query: string; page: int}
+
+type (_, _) route =
+  | Home : (unit, unit) route
+  | About : (unit, about_props) route
+  | Greet : (string, greet_props) route
+  | Search : (search_params, search_params) route
+
+type destination =
+  | Destination : ('params, 'props) route * 'params -> destination
+
+type packed_route = Any : ('params, 'props) route -> packed_route
+
+let component : type params props. (params, props) route -> string = function
   | Home -> "home"
   | About -> "about"
   | Greet -> "greet"
   | Search -> "search"
 
-let page route = route.page
-
-let page_of_component = function
-  | "home" -> Some Home
-  | "about" -> Some About
-  | "greet" -> Some Greet
-  | "search" -> Some Search
+let route_of_component = function
+  | "home" -> Some (Any Home)
+  | "about" -> Some (Any About)
+  | "greet" -> Some (Any Greet)
+  | "search" -> Some (Any Search)
   | _ -> None
 
-let home () = {page= Home; path= "/"}
+let home () = Destination (Home, ())
 
-let about () = {page= About; path= "/about"}
+let about () = Destination (About, ())
 
-let greet name = {page= Greet; path= "/greet/" ^ name}
+let greet name = Destination (Greet, name)
 
 let percent_encode value =
   let hexadecimal = "0123456789ABCDEF" in
@@ -41,16 +52,24 @@ let percent_encode value =
     value ;
   Buffer.contents encoded
 
+let positive_page page = max 1 page
+
 let search ?(query = "") ?(page = 1) () =
+  Destination (Search, {query; page= positive_page page})
+
+let search_path {query; page} =
+  let page = positive_page page in
   let parameters =
     (if String.equal query "" then [] else ["q=" ^ percent_encode query])
     @ if page = 1 then [] else ["page=" ^ string_of_int page]
   in
-  let path =
-    match parameters with
-    | [] -> "/search"
-    | parameters -> "/search?" ^ String.concat "&" parameters
-  in
-  {page= Search; path}
+  match parameters with
+  | [] -> "/search"
+  | parameters -> "/search?" ^ String.concat "&" parameters
 
-let path route = route.path
+let path (Destination (route, parameters)) =
+  match route with
+  | Home -> "/"
+  | About -> "/about"
+  | Greet -> "/greet/" ^ percent_encode parameters
+  | Search -> search_path parameters

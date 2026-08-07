@@ -17,10 +17,6 @@ let handle request =
         Route_common.Query.get "q" parameters |> Option.value ~default:""
       in
       let page = page_number parameters in
-      Route_common.inertia_response request
-        { route= App_routes.search ~query ~page ()
-        ; props=
-            [ ("query", Route_common.Json.String query)
-            ; ("page", Route_common.Json.Int page)
-            ; ("errors", Route_common.Json.Object []) ]
-        ; title= "Search" } )
+      let props = App_routes.{query; page} in
+      Route_common.inertia_response request ~route:App_routes.Search ~props
+        ~title:"Search" )

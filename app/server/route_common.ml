@@ -39,20 +39,27 @@ module Query = struct
   let get name parameters = List.assoc_opt name parameters
 end
 
-type page =
-  {route: App_routes.t; props: (string * Json.t) list; title: string}
-
 let request_url request =
   match Request.query request with
   | None -> Request.path request
   | Some query -> Request.path request ^ "?" ^ query
 
-let page_json request page =
+let route_props : type params props.
+    (params, props) App_routes.route -> props -> (string * Json.t) list =
+ fun route props ->
+  match route with
+  | Home -> []
+  | About -> [("systemVersion", Json.String props.system_version)]
+  | Greet -> [("name", Json.String props.name)]
+  | Search ->
+      [("query", Json.String props.query); ("page", Json.Int props.page)]
+
+let page_json request route props =
   Json.to_string
     (Object
-       [ ( "component"
-         , String (App_routes.component (App_routes.page page.route)) )
-       ; ("props", Object page.props)
+       [ ("component", String (App_routes.component route))
+       ; ( "props"
+         , Object (route_props route props @ [("errors", Json.Object [])]) )
        ; ("url", String (request_url request))
        ; ("version", Null) ] )
 
@@ -87,14 +94,14 @@ let document page_json page_title =
 
 let inertia_headers = Headers.of_list [("vary", "X-Inertia")]
 
-let inertia_response request page =
-  let json = page_json request page in
+let inertia_response request ~route ~props ~title =
+  let json = page_json request route props in
   match Request.header "x-inertia" request with
   | Some value when String.equal (String.lowercase_ascii value) "true" ->
       Response.json
         ~headers:(Headers.add "x-inertia" "true" inertia_headers)
         json
-  | _ -> Response.html ~headers:inertia_headers (document json page.title)
+  | _ -> Response.html ~headers:inertia_headers (document json title)
 
 let require_get request handler =
   match request.Request.meth with
