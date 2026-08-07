@@ -6,3 +6,9 @@
 
 (package
  (name react_demo))
+
+(package
+ (name base_ui))
+
+(package
+ (name inertia_react_bindings))

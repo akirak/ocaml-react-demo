@@ -1,4 +1,5 @@
 (executable
  (public_name react_demo)
+ (package react_demo)
  (name main)
  (libraries app_routes crista pure-html routes unix))

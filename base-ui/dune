@@ -1,5 +1,6 @@
 (library
  (name base_ui)
+ (public_name base_ui)
  (modules
   base_ui
   accordion

@@ -38,20 +38,65 @@
     in
     {
       packages = eachSystem (
-        _system: pkgs: with pkgs; {
-          default = ocamlPackages.buildDunePackage {
+        _system: pkgs:
+        let
+          commonNativeBuildInputs = with pkgs.ocamlPackages; [
+            melange
+            reason
+          ];
+          commonBuildInputs = with pkgs.ocamlPackages; [ ocaml-syntax-shims ];
+          commonPropagatedBuildInputs = with pkgs.ocamlPackages; [
+            melange
+            reason
+            reason-react
+            reason-react-ppx
+          ];
+        in
+        rec {
+          default = app;
+
+          app = pkgs.ocamlPackages.buildDunePackage {
             pname = "react_demo";
             version = "0";
             duneVersion = "3";
             src = self.outPath;
 
-            buildInputs = with ocamlPackages; [ ocaml-syntax-shims ];
+            nativeBuildInputs = commonNativeBuildInputs;
+            buildInputs = commonBuildInputs;
 
-            propagatedBuildInputs = with ocamlPackages; [
-              crista
-              routes
-              pure-html
-            ];
+            propagatedBuildInputs =
+              commonPropagatedBuildInputs
+              ++ (with pkgs.ocamlPackages; [
+                crista
+                pure-html
+                routes
+              ])
+              ++ [
+                base-ui
+                inertia-react
+              ];
+          };
+
+          base-ui = pkgs.ocamlPackages.buildDunePackage {
+            pname = "base_ui";
+            version = "0";
+            duneVersion = "3";
+            src = self.outPath;
+
+            nativeBuildInputs = commonNativeBuildInputs;
+            buildInputs = commonBuildInputs;
+            propagatedBuildInputs = commonPropagatedBuildInputs;
+          };
+
+          inertia-react = pkgs.ocamlPackages.buildDunePackage {
+            pname = "inertia_react_bindings";
+            version = "0";
+            duneVersion = "3";
+            src = self.outPath;
+
+            nativeBuildInputs = commonNativeBuildInputs;
+            buildInputs = commonBuildInputs;
+            propagatedBuildInputs = commonPropagatedBuildInputs;
           };
         }
       );
