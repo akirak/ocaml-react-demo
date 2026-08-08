@@ -11,6 +11,15 @@
     };
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://akirak.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "akirak.cachix.org-1:WJrEMdV1dYyALkOdp/kAECVZ6nAODY5URN05ITFHC+M="
+    ];
+  };
+
   outputs =
     {
       nixpkgs,
@@ -18,6 +27,8 @@
       ...
     }@inputs:
     let
+      inherit (nixpkgs) lib;
+
       eachSystem =
         f:
         nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (
@@ -129,12 +140,6 @@
               ocaml
               findlib
               dune_3
-
-              # Needed for generating documentation
-              # opam
-              # odoc
-              # odig
-
               # This may fail to build, so it is turned off by default.
               # (sherlodoc.override { enableServe = true; })
             ])
@@ -143,6 +148,10 @@
             ;
           };
         }
+      );
+
+      checks = eachSystem (
+        system: pkgs: lib.filterAttrs (name: _: name != "default") self.packages.${system}
       );
     };
 }
