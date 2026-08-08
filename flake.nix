@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nix-ocaml/nix-overlays";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
     # systems.url = "github:nix-systems/default";
 
     # OCaml dependencies
@@ -46,6 +47,18 @@
             )
           )
         );
+
+      treefmtEval = eachSystem (
+        _system: pkgs:
+        inputs.treefmt-nix.lib.evalModule pkgs {
+          projectRootFile = "flake.nix";
+          programs = {
+            nixfmt.enable = true;
+            zizmor.enable = true;
+            ocamlformat.enable = true;
+          };
+        }
+      );
     in
     {
       packages = eachSystem (
@@ -150,8 +163,14 @@
         }
       );
 
+      formatter = eachSystem (system: _pkgs: treefmtEval.${system}.config.build.wrapper);
+
       checks = eachSystem (
-        system: pkgs: lib.filterAttrs (name: _: name != "default") self.packages.${system}
+        system: pkgs:
+        lib.filterAttrs (name: _: name != "default") self.packages.${system}
+        // {
+          formatting = treefmtEval.${system}.config.build.check self;
+        }
       );
     };
 }
