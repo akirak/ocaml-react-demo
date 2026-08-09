@@ -21,7 +21,7 @@ processes:
       melange:
         condition: process_started
   server:
-    command: dune exec --watch react_demo
+    command: dune exec --build-dir _build-server --watch react_demo
     environment:
       - "CLIENT_ENTRYPOINT=${CLIENT_ENTRYPOINT:-http://localhost:5173/main.js}"
       - "PORT=${PORT:-8000}"
