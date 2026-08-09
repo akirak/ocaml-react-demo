@@ -10,15 +10,15 @@
       "locked": {
         "lastModified": 1786118095,
         "narHash": "sha256-hrAxHvXi1ydl04iKreESc7rorrUTKg7BIVrI0Y82RSI=",
-        "owner": "akirak",
-        "repo": "crista",
+        "ref": "refs/heads/main",
         "rev": "e66662f8bdea1500a247b1e54fc5e39bdd0974c2",
-        "type": "github"
+        "revCount": 50,
+        "type": "git",
+        "url": "https://github.com/akirak/crista"
       },
       "original": {
-        "owner": "akirak",
-        "repo": "crista",
-        "type": "github"
+        "type": "git",
+        "url": "https://github.com/akirak/crista"
       }
     },
     "nixpkgs": {

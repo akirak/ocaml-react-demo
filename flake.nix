@@ -6,7 +6,7 @@
 
     # OCaml dependencies
     crista = {
-      url = "github:akirak/crista";
+      url = "git+https://github.com/akirak/crista";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "";
     };
