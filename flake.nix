@@ -121,7 +121,11 @@
       devShells = eachSystem (
         system: pkgs: {
           default = pkgs.mkShell {
-            inputsFrom = [ self.packages.${system}.default ];
+            inputsFrom = [
+              self.packages.${system}.app
+              self.packages.${system}.base-ui
+              self.packages.${system}.inertia-react
+            ];
             packages = [
               pkgs.nodejs
               pkgs.corepack
@@ -134,11 +138,7 @@
               ocamlformat
               ocp-indent
 
-              melange
               mlx
-              reason
-              reason-react
-              reason-react-ppx
 
               utop
 
