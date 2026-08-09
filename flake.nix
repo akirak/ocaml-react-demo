@@ -48,6 +48,45 @@
           )
         );
 
+      makeCommonArgs = ocamlPackages: {
+        duneVersion = "3";
+        src = self.outPath;
+        nativeBuildInputs = with ocamlPackages; [
+          melange
+          reason
+        ];
+        buildInputs = with ocamlPackages; [ ocaml-syntax-shims ];
+        propagatedBuildInputs = with ocamlPackages; [
+          melange
+          reason
+          reason-react
+          reason-react-ppx
+        ];
+      };
+
+      ocamlPackagesOverlay =
+        ofinal: oprev:
+        let
+          commonArgs = makeCommonArgs ofinal;
+        in
+        {
+          base-ui = ofinal.buildDunePackage (
+            commonArgs
+            // {
+              pname = "base_ui";
+              version = "0";
+            }
+          );
+
+          inertia-react = ofinal.buildDunePackage (
+            commonArgs
+            // {
+              pname = "inertia_react_bindings";
+              version = "0";
+            }
+          );
+        };
+
       treefmtEval = eachSystem (
         _system: pkgs:
         inputs.treefmt-nix.lib.evalModule pkgs {
@@ -61,58 +100,29 @@
       );
     in
     {
+      overlays.ocamlPackages = ocamlPackagesOverlay;
+
       packages = eachSystem (
         _system: pkgs:
         let
-          commonArgs = {
-            duneVersion = "3";
-            src = self.outPath;
-            nativeBuildInputs = with pkgs.ocamlPackages; [
-              melange
-              reason
-            ];
-            buildInputs = with pkgs.ocamlPackages; [ ocaml-syntax-shims ];
-            propagatedBuildInputs = with pkgs.ocamlPackages; [
-              melange
-              reason
-              reason-react
-              reason-react-ppx
-            ];
-          };
+          ocamlPackages = pkgs.ocamlPackages.overrideScope ocamlPackagesOverlay;
+          commonArgs = makeCommonArgs ocamlPackages;
         in
-        rec {
-          app = pkgs.ocamlPackages.buildDunePackage (
+        {
+          app = ocamlPackages.buildDunePackage (
             commonArgs
             // {
               pname = "react_demo";
               version = "0";
               propagatedBuildInputs =
                 commonArgs.propagatedBuildInputs
-                ++ (with pkgs.ocamlPackages; [
+                ++ (with ocamlPackages; [
                   crista
                   pure-html
                   routes
-                ])
-                ++ [
                   base-ui
                   inertia-react
-                ];
-            }
-          );
-
-          base-ui = pkgs.ocamlPackages.buildDunePackage (
-            commonArgs
-            // {
-              pname = "base_ui";
-              version = "0";
-            }
-          );
-
-          inertia-react = pkgs.ocamlPackages.buildDunePackage (
-            commonArgs
-            // {
-              pname = "inertia_react_bindings";
-              version = "0";
+                ]);
             }
           );
         }
