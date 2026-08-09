@@ -9,6 +9,9 @@ It features:
 - Type-safe routing in native OCaml/ReasonML.
 - Integrations with the common frontend toolchain and libraries
 
+It's mostly an internal experiment, but for some technical reasons, it has ended
+up as a public repository.
+
 ## Development
 You can make dependencies available through Nix.
 
