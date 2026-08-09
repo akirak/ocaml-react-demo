@@ -109,6 +109,8 @@
           commonArgs = makeCommonArgs ocamlPackages;
         in
         {
+          inherit (ocamlPackages) base-ui inertia-react;
+
           app = ocamlPackages.buildDunePackage (
             commonArgs
             // {
