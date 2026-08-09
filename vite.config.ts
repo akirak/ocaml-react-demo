@@ -20,5 +20,10 @@ export default defineConfig({
     outDir: "../dist",
     emptyOutDir: true,
     cssMinify: "lightningcss",
+    rollupOptions: {
+      output: {
+        entryFileNames: "main.js",
+      },
+    },
   },
 })

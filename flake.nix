@@ -131,7 +131,15 @@
       );
 
       devShells = eachSystem (
-        system: pkgs: {
+        system: pkgs:
+        let
+          playwright-browsers = pkgs.playwright-driver.browsers.override {
+            withFirefox = false;
+            withWebkit = false;
+            withFfmpeg = false;
+          };
+        in
+        {
           default = pkgs.mkShell {
             inputsFrom = [
               self.packages.${system}.app
@@ -164,6 +172,24 @@
             # Enable file watcher.
             # ++ lib.optional pkgs.stdenv.isLinux pkgs.inotify-tools
             ;
+          };
+
+          # A devshell for running Playwright scripts for E2E
+          playwright = pkgs.mkShell {
+            packages = [
+              pkgs.nodejs
+              pkgs.corepack
+              playwright-browsers
+              pkgs.simple-http-server
+            ];
+
+            shellHook = ''
+              browser_executable="$(find -L '${playwright-browsers}' -name ${
+                if pkgs.stdenv.targetPlatform.isLinux then "chrome" else "Chromium"
+              } -type f)"
+
+              export PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH="''${browser_executable}"
+            '';
           };
         }
       );

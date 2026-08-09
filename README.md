@@ -36,6 +36,21 @@ Set `PORT` to change the server port. `CLIENT_ENTRYPOINT` can override the
 client module URL when the frontend assets are served somewhere other than the
 default Vite development server.
 
+## End-to-end tests
+
+Run the end-to-end stack through its dedicated Process Compose configuration:
+
+``` shell
+process-compose -f process-compose.e2e.yaml run playwright
+```
+
+Process Compose installs the JavaScript dependencies, builds the OCaml,
+Melange, and production frontend assets once, serves `dist` with
+`simple-http-server`, and waits for both static assets and the server health
+endpoint. It then runs the test script inside `nix develop .#playwright`. The
+shell provides Chromium through Nix, so Playwright does not download a separate
+browser.
+
 ## Based on
 
 - https://github.com/lessp/react-ml-minimal-template/

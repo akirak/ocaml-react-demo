@@ -1,0 +1,68 @@
+version: "0.5"
+is_strict: true
+
+processes:
+  install:
+    command: pnpm install --frozen-lockfile
+    availability:
+      restart: "no"
+
+  build:
+    command: dune build @all @melange --auto-promote
+    availability:
+      restart: "no"
+
+  assets:
+    command: pnpm build
+    availability:
+      restart: "no"
+    depends_on:
+      build:
+        condition: process_completed_successfully
+      install:
+        condition: process_completed_successfully
+
+  static-server:
+    command: nix develop .#playwright -c simple-http-server --ip 127.0.0.1 --port 5173 --cors dist
+    depends_on:
+      assets:
+        condition: process_completed_successfully
+    readiness_probe:
+      http_get:
+        host: 127.0.0.1
+        port: 5173
+        path: /main.js
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 5
+      failure_threshold: 120
+
+  server:
+    command: dune exec --no-build react_demo
+    environment:
+      - "CLIENT_ENTRYPOINT=http://127.0.0.1:5173/main.js"
+      - "PORT=8000"
+    depends_on:
+      assets:
+        condition: process_completed_successfully
+    readiness_probe:
+      http_get:
+        host: 127.0.0.1
+        port: 8000
+        path: /health
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 5
+      failure_threshold: 120
+
+  playwright:
+    command: nix develop .#playwright -c pnpm test:e2e
+    availability:
+      restart: "no"
+    depends_on:
+      install:
+        condition: process_completed_successfully
+      server:
+        condition: process_healthy
+      static-server:
+        condition: process_healthy
