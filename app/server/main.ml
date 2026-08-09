@@ -12,6 +12,7 @@ let router =
   Routes.one_of
     Routes.
       [ Home.path () @--> Home.handle
+      ; Health.path () @--> Health.handle
       ; About.path () @--> About.handle
       ; Greet.path () @--> Greet.handle
       ; Search.path () @--> Search.handle ]
