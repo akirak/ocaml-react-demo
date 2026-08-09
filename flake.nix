@@ -65,12 +65,12 @@
       };
 
       ocamlPackagesOverlay =
-        ofinal: oprev:
+        final: _prev:
         let
-          commonArgs = makeCommonArgs ofinal;
+          commonArgs = makeCommonArgs final;
         in
         {
-          base-ui = ofinal.buildDunePackage (
+          base-ui = final.buildDunePackage (
             commonArgs
             // {
               pname = "base_ui";
@@ -78,7 +78,7 @@
             }
           );
 
-          inertia-react = ofinal.buildDunePackage (
+          inertia-react = final.buildDunePackage (
             commonArgs
             // {
               pname = "inertia_react_bindings";
