@@ -1,5 +1,14 @@
 # OCaml React Demo
 
+This is a demo repository for a full-stack OCaml application built with Melange,
+Reason, and [crista](https://github.com/akirak/crista). It also provides OCaml
+bindings for React-related packages used by the application.
+
+It features:
+
+- Type-safe routing in native OCaml/ReasonML.
+- Integrations with the common frontend toolchain and libraries
+
 ## Development
 You can make dependencies available through Nix.
 
