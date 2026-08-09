@@ -81,8 +81,6 @@
           };
         in
         rec {
-          default = app;
-
           app = pkgs.ocamlPackages.buildDunePackage (
             commonArgs
             // {
@@ -162,7 +160,7 @@
 
       checks = eachSystem (
         system: pkgs:
-        lib.filterAttrs (name: _: name != "default") self.packages.${system}
+        self.packages.${system}
         // {
           formatting = treefmtEval.${system}.config.build.check self;
         }
