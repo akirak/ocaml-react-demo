@@ -64,64 +64,59 @@
       packages = eachSystem (
         _system: pkgs:
         let
-          commonNativeBuildInputs = with pkgs.ocamlPackages; [
-            melange
-            reason
-          ];
-          commonBuildInputs = with pkgs.ocamlPackages; [ ocaml-syntax-shims ];
-          commonPropagatedBuildInputs = with pkgs.ocamlPackages; [
-            melange
-            reason
-            reason-react
-            reason-react-ppx
-          ];
+          commonArgs = {
+            duneVersion = "3";
+            src = self.outPath;
+            nativeBuildInputs = with pkgs.ocamlPackages; [
+              melange
+              reason
+            ];
+            buildInputs = with pkgs.ocamlPackages; [ ocaml-syntax-shims ];
+            propagatedBuildInputs = with pkgs.ocamlPackages; [
+              melange
+              reason
+              reason-react
+              reason-react-ppx
+            ];
+          };
         in
         rec {
           default = app;
 
-          app = pkgs.ocamlPackages.buildDunePackage {
-            pname = "react_demo";
-            version = "0";
-            duneVersion = "3";
-            src = self.outPath;
+          app = pkgs.ocamlPackages.buildDunePackage (
+            commonArgs
+            // {
+              pname = "react_demo";
+              version = "0";
+              propagatedBuildInputs =
+                commonArgs.propagatedBuildInputs
+                ++ (with pkgs.ocamlPackages; [
+                  crista
+                  pure-html
+                  routes
+                ])
+                ++ [
+                  base-ui
+                  inertia-react
+                ];
+            }
+          );
 
-            nativeBuildInputs = commonNativeBuildInputs;
-            buildInputs = commonBuildInputs;
+          base-ui = pkgs.ocamlPackages.buildDunePackage (
+            commonArgs
+            // {
+              pname = "base_ui";
+              version = "0";
+            }
+          );
 
-            propagatedBuildInputs =
-              commonPropagatedBuildInputs
-              ++ (with pkgs.ocamlPackages; [
-                crista
-                pure-html
-                routes
-              ])
-              ++ [
-                base-ui
-                inertia-react
-              ];
-          };
-
-          base-ui = pkgs.ocamlPackages.buildDunePackage {
-            pname = "base_ui";
-            version = "0";
-            duneVersion = "3";
-            src = self.outPath;
-
-            nativeBuildInputs = commonNativeBuildInputs;
-            buildInputs = commonBuildInputs;
-            propagatedBuildInputs = commonPropagatedBuildInputs;
-          };
-
-          inertia-react = pkgs.ocamlPackages.buildDunePackage {
-            pname = "inertia_react_bindings";
-            version = "0";
-            duneVersion = "3";
-            src = self.outPath;
-
-            nativeBuildInputs = commonNativeBuildInputs;
-            buildInputs = commonBuildInputs;
-            propagatedBuildInputs = commonPropagatedBuildInputs;
-          };
+          inertia-react = pkgs.ocamlPackages.buildDunePackage (
+            commonArgs
+            // {
+              pname = "inertia_react_bindings";
+              version = "0";
+            }
+          );
         }
       );
 
