@@ -39,4 +39,5 @@ let () =
       exit 2
   in
   Printf.eprintf "Listening on http://%s:%d\n%!" !bind !port ;
-  Crista_miou.run ~address ~port:!port handler
+  Eio_main.run @@ fun environment ->
+    Crista_eio.serve ~net:environment#net ~address ~port:!port handler
