@@ -8,11 +8,11 @@
         "treefmt-nix": []
       },
       "locked": {
-        "lastModified": 1786460945,
-        "narHash": "sha256-tYQ5a2hgeZOOufS52dh8ZAcWDIKL3ABUat4FFDOTIw8=",
+        "lastModified": 1786463072,
+        "narHash": "sha256-+fedJC7VjYI7aRhZoYtubjzI+bdea+JjUZiLjc0lx1s=",
         "owner": "akirak",
         "repo": "crista",
-        "rev": "04375fc5b8b65a126a4f0c2ab7796b7414e941ab",
+        "rev": "07409202f0bdf86a19dc955746ee69695405341b",
         "type": "github"
       },
       "original": {
