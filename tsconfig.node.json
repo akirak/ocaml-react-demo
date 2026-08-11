@@ -19,5 +19,13 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
+  "exclude": {
+    "directories": [
+      "node_modules",
+      "_build",
+      "_build-server",
+      ".direnv"
+    ]
+  },
   "include": ["vite.config.ts"]
 }
