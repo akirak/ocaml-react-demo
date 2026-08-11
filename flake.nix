@@ -120,6 +120,7 @@
                 commonArgs.propagatedBuildInputs
                 ++ (with ocamlPackages; [
                   crista
+                  crista-miou
                   pure-html
                   routes
                   base-ui

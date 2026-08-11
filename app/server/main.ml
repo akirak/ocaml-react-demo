@@ -39,4 +39,4 @@ let () =
       exit 2
   in
   Printf.eprintf "Listening on http://%s:%d\n%!" !bind !port ;
-  Miou_server.run ~address ~port:!port handler
+  Crista_miou.run ~address ~port:!port handler
