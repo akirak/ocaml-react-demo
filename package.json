@@ -13,20 +13,20 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
-    "@inertiajs/core": "^3.7.1",
-    "@inertiajs/react": "^3.7.1",
+    "@inertiajs/core": "^3.8.0",
+    "@inertiajs/react": "^3.8.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
-    "@types/node": "^26.6.3",
+    "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "browserslist": "^4.29.2",
+    "browserslist": "^4.29.3",
     "lightningcss": "^1.33.0",
-    "oxlint": "^1.86.0",
+    "oxlint": "^1.87.0",
     "typescript": "~7.0.2",
-    "vite": "^8.3.1"
+    "vite": "^8.3.3"
   }
 }
