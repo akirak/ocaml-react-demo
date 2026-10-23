@@ -12,21 +12,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@base-ui/react": "^1.8.0",
-    "@inertiajs/core": "^3.8.0",
-    "@inertiajs/react": "^3.8.0",
+    "@base-ui/react": "^1.9.0",
+    "@inertiajs/core": "^3.9.1",
+    "@inertiajs/react": "^3.9.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.63.0",
-    "@types/node": "^26.6.4",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "browserslist": "^4.29.3",
     "lightningcss": "^1.33.0",
     "oxlint": "^1.87.0",
     "typescript": "~7.0.2",
-    "vite": "^8.3.3"
+    "vite": "^8.3.4"
   }
 }
