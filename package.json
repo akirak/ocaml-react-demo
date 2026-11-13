@@ -13,19 +13,19 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
-    "@inertiajs/core": "^3.9.1",
-    "@inertiajs/react": "^3.9.1",
+    "@inertiajs/core": "^3.11.0",
+    "@inertiajs/react": "^3.11.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.5",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "browserslist": "^4.29.5",
     "lightningcss": "^1.33.0",
-    "oxlint": "^1.89.0",
+    "oxlint": "^1.90.0",
     "typescript": "~7.0.2",
     "vite": "^8.3.5"
   }
